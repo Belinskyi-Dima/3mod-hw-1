@@ -1,0 +1,91 @@
+body {
+	/* margin: 0 auto; */
+	
+}
+.box {
+	margin: 0 auto;
+	width: 500px;
+	/* text-align: center; */
+}
+.total {
+	font-weight: 700;
+	font-size: 30px;
+}
+.right {
+	float: right;
+	 /* text-align: right;
+	margin-right: auto;
+	right: 0px; */
+}  
+
+.total-user {
+
+}
+.total-comp {
+margin-right: 0;
+}
+table {
+	margin: 0 auto;
+	border-spacing: 0px 0px;
+	border: 1px solid #000;
+
+}
+td {
+	background: rgb(89, 173, 230);
+	width: 50px;
+	height: 50px;
+	border: 1px solid #000;
+}
+
+.krot {
+	background: url('/img/mole-svgrepo-com.svg') center no-repeat;
+	height: 15px;
+	width: 15px;
+}
+
+.red {
+	background: red;
+}
+.green {
+	background:url("../img/flowers.png") center no-repeat;
+}
+.winner {
+	text-transform: uppercase;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+	font-size: 50px;
+	color: red;
+	font-weight: 700;
+	display: none;
+}
+
+.btn {
+	/* display: block; */
+
+	/* margin: 0 auto; */
+	/* text-align: center; */
+	border: none;
+	width: 120px;
+	border-radius: 5px;
+	height: 50px;
+	cursor: pointer;
+	background: rgb(68, 72, 204);
+	color: white;
+	text-transform: uppercase;
+	font-size: 18px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+.box-level {
+	
+	text-align: center;
+}
+.level {
+	text-align: center;
+	margin: 20px 0 60px;
+}
+.box-button {
+	text-align: center;
+}
+

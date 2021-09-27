@@ -1,49 +1,119 @@
 "use strict";
-class Employee {
-	constructor({name, age, salary} = {}) {
-	this._name = name;
-	this._age = age;
-	this._salary = salary;
-	// console.log(this);
-}
-get name () {
-	return this._name;
-}
-set name (newName) {
-	this._name = newName;
-}
 
-get age () {
-	return this._age;
-}
-set age (newAge) {
-	this._age = newAge;
-}
+let activeClass = 'krot';
+let greenClass = 'green';
+let redClass = 'red';
 
-get salary () {
-return this._salary ;
-}
-set salary(newSalary) {
-	this._salary = newSalary * 3;
-	}
-}
-class Programmer extends Employee {
-	constructor({name, age, salary ,lang}) {
-		super({name, age, salary});
-		this.lang = lang;
-	}
-	get salary () {
-		return this._salary * 3;
+
+$(document).ready(()=>{
+	let $cells = $('td');
+	let $totalUser = $('.total-user');
+	let $totalComputer = $('.total-comp');
+	let $winner =$('.winner');
+
+	let usedCell = 0;
+	let userTotal = 0;
+	let computerTotal = -1;
+	let interval;
+
+	function clear(){
+		usedCell = 0;
+		userTotal = 0;
+		computerTotal = -1;
+
+		$cells.removeClass(activeClass).removeClass(greenClass).removeClass(redClass);
+		$totalUser.text(0);
+		$totalComputer.text(0);
+		$winner.hide().text('');
 	}
 
-}
+	function startGame(){
+		jump();
+		start();
+	}
 
-const programmer = new Programmer ({name: "Dima", age: 22,salary: 2000, lang: "italian"});
-const operator = new Programmer ({name: "Andre", age: 28,salary: 900, lang: "espaniol"});
-const manager = new Programmer ({name: "alex", age: 30, salary: 800});
+	function start(){
+		interval = setInterval(jump, $('.level').val());
+	}
 
-console.log(programmer);
-console.log(programmer.salary);
-console.log(manager);
-console.log(manager.salary);
-console.log(operator);
+	function stop(){
+		clearInterval(interval);
+	}
+	
+
+	function jump() {
+		if(!isContinueGame()){
+			stop();
+			let winner = userTotal > computerTotal ? 'user' : 'computer';
+			$winner.text(`The winner is ${winner}`).show();
+			return;
+		}
+
+		let index = getRandomInt($cells.length);
+		let $cell = $cells.eq(index);
+
+		if(!$cell.hasClass(activeClass) && !$cell.hasClass(greenClass) && !$cell.hasClass(redClass)){
+			let $activeCell = $('.'+ activeClass);
+			if(!$activeCell.hasClass(greenClass)){
+				$activeCell.addClass(redClass);
+				computerTotal++;
+				$totalComputer.text(computerTotal);
+				usedCell++;
+			}
+			$activeCell.removeClass(activeClass);
+
+			$cell.addClass(activeClass);
+		} else {
+			jump();
+		}
+	}
+
+	function getRandomInt(max) {
+		return Math.floor(Math.random() * max);
+	}
+
+	function isContinueGame(){
+		return usedCell <= $cells.length / 2;
+	}
+
+	$('table').on('click', 'td', (e) => {
+		e.preventDefault();
+		if(!isContinueGame()) return;
+
+		let $this = $(e.target);
+		if($this.hasClass(greenClass) || $this.hasClass(redClass)){
+			return;
+		}
+
+		if($this.hasClass(activeClass)){
+			$this.addClass(greenClass);
+			userTotal++;
+			$totalUser.text(userTotal);
+			usedCell++;
+		}
+
+		if(!isContinueGame()){
+			stop();
+		}
+	});
+
+	$('.start').on('click', (e) => {
+		e.preventDefault();
+		startGame();
+	});
+
+	$('.stop').on('click', (e) => {
+		e.preventDefault();
+		clear();
+		stop();
+	});
+
+	$('.restart').on('click', (e) => {
+		e.preventDefault();
+		clear();
+		stop();
+		startGame();
+	});
+
+
+});
